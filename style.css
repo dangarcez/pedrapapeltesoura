@@ -1,0 +1,72 @@
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family:Verdana, Geneva, Tahoma, sans-serif; 
+}
+
+.sections{
+   display: flex;
+   max-width: 800px;
+   margin: auto;
+}
+
+.sections > * {
+   flex: 1;
+}
+
+.pontos{
+   display: flex;
+   margin:20px 0px ;
+   gap: 10px;
+   
+}  
+
+.ponto{
+   display: flex;
+   border: 1px solid black;
+}
+
+.xDiv{
+   flex-basis: 30px;
+   text-align: center;
+   align-content: center;
+   font-weight: bold;
+   font-size: 20px;
+}
+
+#p1{
+   background-color: #33aa1a;
+   color: white;
+
+}
+
+#p1 .score{
+   border-left: 2px solid white;
+}
+
+#p2{
+   background-color: #ce493f;
+   color: white;
+}
+#p2 .score{
+   border-right: 2px solid white;
+}
+
+.jogador{
+   padding: 5px 10px;
+}
+
+.score{
+   flex-basis: 50px;
+   width: 30px;
+   text-align: center;
+   align-content: center;
+}
+
+#jogadas{
+}
+
+#rightSection > p {
+   margin-bottom: 10px;
+}

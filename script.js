@@ -22,29 +22,69 @@ const hierarquia = {
 
 let userScore = 0
 let score = 0
+let gameOver = false
 
-for(let i=0;i<5;i++){
-   let escolhaUser = prompt("Faça a sua jogada:").toLowerCase();
-   let escolha = getComputerChoice().toLowerCase();
 
-   console.log(`Você: ${capitalize(escolhaUser)},bot: ${capitalize(escolha)}`)
-   if(hierarquia[escolhaUser]==escolha){
-      console.log("Voce ganhou esta rodada!")
-      userScore+=1
-   }else if(hierarquia[escolha]==escolhaUser){
-      console.log("Você perdeu esta rodada.")
-      score +=1
-   }else{
-      console.log("Empate na rodada.")
+const jogadas = document.querySelector("#jogadas")
+const rightSection = document.querySelector("#rightSection")
+const scoreJogador= document.querySelector("#p1 .score")
+const scoreMaquina= document.querySelector("#p2 .score")
+const botaoReiniciar = document.createElement("button")
+botaoReiniciar.textContent= "Jogar novamente"
+botaoReiniciar.addEventListener("click", e=>{
+   scoreJogador.textContent = 0;
+   scoreMaquina.textContent = 0;
+   userScore = 0
+   score = 0
+   gameOver = false;
+   [...rightSection.children].forEach(e=>{
+      rightSection.removeChild(e)
+   })
+})
+
+
+
+jogadas.addEventListener("click", (e)=>{
+   if(!gameOver){
+      switch(e.target.id){
+         case "pedra": playRound("pedra")
+         break;
+         case "papel": playRound("papel")
+         break;
+         case "tesoura":playRound("tesoura")
+         break;
+      }
+      if(score>4 || userScore>4){
+         finishGame();
+      }
    }
+})
+
+function finishGame(){
+   if(userScore> score){
+      rightSection.innerHTML += `<p style="color:green">WIN!</p><p>Você ganhou o jogo: <span>${userScore}</span> X <span>${score}</span></p>`
+   }else{
+      rightSection.innerHTML += `<p style="color:red">Game Over!</p><p>Você perdeu o jogo: <span>${userScore}</span> X <span>${score}</span></p>`
+   }
+   gameOver = true
+   rightSection.appendChild(botaoReiniciar)
+
 }
 
-if(userScore>score){
-   console.log(`Você ganhou! ${userScore} a ${score}`)
-}else if (score>userScore){
-   console.log(`Você perdeu. ${userScore} a ${score}`)
-}else{
-   console.log(`Empate! ${userScore} a ${score}`)
-   
+
+function playRound(jogada){
+   let escolha = getComputerChoice().toLowerCase();
+   rightSection.innerHTML = (`<p>Você: ${capitalize(jogada)} | Maquina: ${capitalize(escolha)}</p>`)
+   if(hierarquia[jogada]==escolha){
+      rightSection.innerHTML += `<p style="color:green">Você ganhou a rodada </p>`
+      scoreJogador.textContent = Number(scoreJogador.textContent) + 1
+      userScore+=1
+   }else if(hierarquia[escolha]==jogada){
+      rightSection.innerHTML += `<p style="color:red">Você perdeu a rodada </p>`
+      scoreMaquina.textContent = Number(scoreMaquina.textContent) + 1
+      score +=1
+   }else{
+      rightSection.innerHTML += `<p style="color:purple">Empate na rodada </p>`
+   }
 }
 
